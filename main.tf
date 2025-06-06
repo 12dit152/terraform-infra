@@ -34,3 +34,8 @@ module "security_groups" {
   vpc_id = module.vpc.samar_vpc_id
 }
 
+module "cache" {
+  source = "./elasticache"
+  subnet_ids = [module.vpc.public_subnet1_id, module.vpc.public_subnet2_id]
+  security_group_ids = [module.security_groups.redis_security_group_id]
+}
