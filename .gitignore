@@ -4,6 +4,11 @@ out/
 !**/src/test/**/out/
 terraform.iml
 .idea/
+terraform-infra.iml
+terraform.tfstate
+terraform.tfstate.backup
+.terraform.lock.hcl
+.terraform.tfstate.lock.info
 
 ### Eclipse ###
 .apt_generated
