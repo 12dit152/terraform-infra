@@ -4,6 +4,11 @@ out/
 !**/src/test/**/out/
 terraform.iml
 .idea/
+.idea/misc.xml
+.idea/modules.xml
+.idea/workspace.xml
+.idea/vcs.xml
+.terraform
 terraform-infra.iml
 terraform.tfstate
 terraform.tfstate.backup
@@ -34,3 +39,8 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+.idea/
+.vscode/
+.aws-sam/
+target/
+.terraform.lock.hcl

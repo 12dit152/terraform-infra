@@ -6,10 +6,19 @@ terraform {
       version = ">= 4.0"
     }
   }
+
+  backend "s3" {
+    bucket  = "terraform-state-897729105223-eu-west-1"
+    key     = "terraform.tfstate"
+    region  = "eu-west-1"
+    encrypt = true
+    profile = "admin-profile"
+  }
 }
 
 provider "aws" {
   region = "eu-west-1"
+  profile = "admin-profile"
 }
 
 module "cloudwatch" {
@@ -34,8 +43,24 @@ module "security_groups" {
   vpc_id = module.vpc.samar_vpc_id
 }
 
-module "cache" {
-  source = "./elasticache"
-  subnet_ids = [module.vpc.public_subnet1_id, module.vpc.public_subnet2_id]
-  security_group_ids = [module.security_groups.redis_security_group_id]
+module "iam_provider" {
+  source = "./iam/provider"
+}
+
+module "s3" {
+  source = "./s3"
+}
+
+module "lambda" {
+  source = "./lambda"
+}
+
+module "api_gateway" {
+  source = "./api-gateway"
+}
+
+module "route53" {
+  source = "./route53"
+  api_gateway_domain_name = module.api_gateway.api_gateway_domain_name
+  api_gateway_zone_id     = module.api_gateway.api_gateway_zone_id
 }

@@ -1,3 +1,6 @@
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
+
 resource "aws_iam_role" "vpc_flow_logs" {
   name = "vpc-flow-logs-role"
   assume_role_policy = jsonencode({
