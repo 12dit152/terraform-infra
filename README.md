@@ -8,58 +8,85 @@ This project provides a modular, production-ready Terraform setup for deploying 
 
 ## Features
 
-- **Modular Structure**: Each major AWS resource (VPC, IAM, Security Groups, CloudWatch) is managed in its own module for easy maintenance and scalability.
-- **VPC & Subnets**: Creates a VPC with multiple public and private subnets across availability zones.
-- **Security Groups**: Configurable security groups for SSH, HTTP, and HTTPS, with support for custom rules.
-- **CloudWatch Logging**: Sets up CloudWatch log groups and VPC Flow Logs for all subnets, with separate log groups for allow/deny traffic.
-- **IAM Best Practices**: Uses a dedicated IAM role for VPC Flow Logs with least-privilege permissions.
-- **Outputs**: Exposes key resource IDs and ARNs for use in other modules or for reference.
+- **Environment-Based Structure**: Separate configurations for dev and prod environments
+- **Modular Architecture**: Reusable modules for network, security, compute, storage, monitoring, DNS, and IAM
+- **Multi-Environment Support**: Easy deployment across different environments with environment-specific configurations
+- **AWS Best Practices**: Follows AWS Well-Architected Framework principles
+- **Scalable Design**: Modular structure allows easy addition of new services and environments
 
 ## Folder Structure
 
 ```
 terraform/
-├── main.tf                # Root module, loads all submodules
-├── vpc/                   # VPC, subnets, route tables, and flow logs
-│   └── main.tf
-├── security_groups/       # Security group definitions
-│   └── main.tf
-├── cloudwatch/            # CloudWatch log group resources
-│   └── main.tf
-├── iam/                   # IAM roles and policies
-│   └── main.tf
+├── environments/          # Environment-specific configurations
+│   ├── dev/              # Development environment
+│   │   ├── main.tf       # Dev environment main configuration
+│   │   ├── variables.tf  # Dev-specific variables
+│   │   ├── outputs.tf    # Dev environment outputs
+│   │   └── providers.tf  # AWS provider configuration
+│   └── prod/             # Production environment
+│       ├── main.tf       # Prod environment main configuration
+│       ├── variables.tf  # Prod-specific variables
+│       ├── outputs.tf    # Prod environment outputs
+│       └── providers.tf  # AWS provider configuration
+└── modules/              # Reusable Terraform modules
+    ├── network/          # VPC, subnets, route tables
+    ├── security/         # Security groups and NACLs
+    ├── compute/          # EC2, Auto Scaling, Load Balancers
+    ├── storage/          # S3, EBS, EFS resources
+    ├── monitoring/       # CloudWatch, SNS, alarms
+    ├── dns/              # Route53 configurations
+    └── iam/              # IAM roles, policies, users
 ```
 
 ## How to Use
 
 1. **Clone the repository**
-2. **Initialize Terraform**
+2. **Navigate to desired environment**
+   ```sh
+   cd environments/dev  # or environments/prod
+   ```
+3. **Initialize Terraform**
    ```sh
    terraform init
    ```
-3. **Review and customize variables as needed**
-4. **Plan the deployment**
+4. **Review and customize variables in variables.tf**
+5. **Plan the deployment**
    ```sh
    terraform plan
    ```
-5. **Apply the configuration**
+6. **Apply the configuration**
    ```sh
    terraform apply
    ```
 
 ## Project Highlights
-- All subnets (public and private) have VPC Flow Logs enabled, with logs sent to CloudWatch using a secure IAM role.
-- Security groups are modular and can be easily extended for new services.
-- IAM permissions follow the principle of least privilege.
-- CloudWatch log groups have configurable retention policies.
+- **Environment Isolation**: Separate state files and configurations for dev/prod environments
+- **Reusable Modules**: DRY principle with shared modules across environments
+- **Security Best Practices**: IAM roles with least-privilege access
+- **Scalable Architecture**: Easy to add new environments and services
+- **State Management**: Environment-specific Terraform state files
 
 ## Requirements
 - Terraform >= 1.0.0
-- AWS CLI credentials with permissions to create IAM, VPC, CloudWatch, and related resources
+- AWS CLI configured with appropriate permissions
+- Access to create resources in target AWS account
 
-## Customization
-- Edit the respective `main.tf` files in each module to adjust CIDR blocks, subnet counts, security group rules, log retention, etc.
-- Add new modules for additional AWS services as needed.
+## Module Usage
+Each module in the `modules/` directory can be used independently:
+
+```hcl
+module "network" {
+  source = "../../modules/network"
+  # module-specific variables
+}
+```
+
+## Adding New Environments
+1. Create new directory under `environments/`
+2. Copy configuration files from existing environment
+3. Customize variables for new environment
+4. Initialize and apply Terraform
 
 ## License
 MIT
