@@ -63,8 +63,10 @@ resource "aws_iam_policy" "github_s3_policy" {
           "lambda:UpdateFunctionCode",
           "lambda:UpdateFunctionConfiguration",
           "lambda:GetFunction",
+          "lambda:GetFunctionConfiguration",
           "lambda:PublishVersion",
-          "lambda:UpdateAlias"
+          "lambda:UpdateAlias",
+          "lambda:GetAlias"
         ]
         Resource = [
           "arn:aws:s3:::maven-releases-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.id}",
