@@ -10,3 +10,8 @@ terraform.tfvars
 *.pem
 *.key
 .env
+
+# IDE files
+.idea/
+*.iml
+.vscode/
