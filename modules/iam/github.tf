@@ -46,9 +46,9 @@ resource "aws_iam_role" "github_actions_role" {
   }
 }
 
-# GitHub Actions S3 and Lambda Policy
-resource "aws_iam_policy" "github_s3_policy" {
-  name = "GitHubS3UploadPolicy"
+# GitHub Actions Deployment Policy
+resource "aws_iam_policy" "github_deployment_policy" {
+  name = "GitHubDeploymentPolicy"
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -81,7 +81,7 @@ resource "aws_iam_policy" "github_s3_policy" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "github_s3_policy_attachment" {
+resource "aws_iam_role_policy_attachment" "github_deployment_policy_attachment" {
   role       = aws_iam_role.github_actions_role.name
-  policy_arn = aws_iam_policy.github_s3_policy.arn
+  policy_arn = aws_iam_policy.github_deployment_policy.arn
 }

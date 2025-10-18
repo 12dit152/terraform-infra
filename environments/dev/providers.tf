@@ -11,12 +11,12 @@ terraform {
     bucket  = "terraform-state-897729105223-eu-west-1"
     key     = "dev/terraform.tfstate"
     region  = "eu-west-1"
-    encrypt = true
     profile = "admin-profile"
+    encrypt = true
   }
 }
 
 provider "aws" {
-  region  = "eu-west-1"
+  region = "eu-west-1"
   profile = "admin-profile"
 }
