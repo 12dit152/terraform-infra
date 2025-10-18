@@ -1,46 +1,12 @@
-### IntelliJ IDEA ###
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
-terraform.iml
-.idea/
-.idea/misc.xml
-.idea/modules.xml
-.idea/workspace.xml
-.idea/vcs.xml
-.terraform
-terraform-infra.iml
-terraform.tfstate
-terraform.tfstate.backup
+# Terraform files
+*.tfstate
+*.tfstate.*
+.terraform/
 .terraform.lock.hcl
-.terraform.tfstate.lock.info
+terraform.tfvars
+*.auto.tfvars
 
-### Eclipse ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-
-### VS Code ###
-.vscode/
-
-### Mac OS ###
-.DS_Store
-.idea/
-.vscode/
-.aws-sam/
-target/
-.terraform.lock.hcl
+# Sensitive files
+*.pem
+*.key
+.env
