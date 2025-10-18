@@ -33,3 +33,8 @@ module "dns" {
   api_gateway_domain_name = module.compute.api_gateway_domain_name
   api_gateway_zone_id     = module.compute.api_gateway_zone_id
 }
+
+module "billing" {
+  source      = "../../modules/billing"
+  alert_email = var.alert_email
+}
