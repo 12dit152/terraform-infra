@@ -1,0 +1,41 @@
+# Terraform files
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+terraform.tfvars
+*.auto.tfvars
+*.tfplan
+*.tfplan.*
+crash.log
+crash.*.log
+
+# Environment-specific files
+environments/*/.terraform/
+environments/*/.terraform.lock.hcl
+environments/*/terraform.tfvars
+environments/*/*.auto.tfvars
+environments/*/*.tfstate
+environments/*/*.tfstate.*
+environments/*/*.tfplan
+
+# Sensitive files
+*.pem
+*.key
+.env
+*.env
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.bak
+*.backup
+*~

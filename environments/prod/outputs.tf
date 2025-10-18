@@ -1,0 +1,14 @@
+output "vpc_id" {
+  description = "VPC ID"
+  value       = module.network.samar_vpc_id
+}
+
+output "api_gateway_url" {
+  description = "API Gateway URL"
+  value       = module.compute.api_gateway_url
+}
+
+output "custom_domain_url" {
+  description = "Custom domain URL"
+  value       = module.compute.custom_domain_url
+}
