@@ -4,6 +4,7 @@ module "monitoring" {
 
 module "iam" {
   source = "../../modules/iam"
+  github_org = var.github_org
 }
 
 module "network" {
@@ -46,4 +47,11 @@ module "dns" {
 module "billing" {
   source      = "../../modules/billing"
   alert_email = var.alert_email
+}
+
+module "grafana_logs" {
+  source               = "../../modules/grafana/logs"
+  grafana_log_url      = var.grafana_log_url
+  grafana_log_username = var.grafana_log_username
+  grafana_log_key      = var.grafana_log_key
 }

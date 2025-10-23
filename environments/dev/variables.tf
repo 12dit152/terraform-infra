@@ -4,8 +4,9 @@ variable "environment" {
   default     = "dev"
 }
 
-variable "alert_email" {
-  description = "Email address for budget alerts"
-  type        = string
-  default     = "toehold.realer.5x@icloud.com"
-}
+variable "github_org" {}
+variable "alert_email" {}
+
+variable "grafana_log_url" {}
+variable "grafana_log_username" {}
+variable "grafana_log_key" {}
