@@ -121,6 +121,10 @@ resource "aws_cloudwatch_metric_stream" "metric_stream" {
   output_format = "opentelemetry1.0"
 
   include_filter {
-    namespace = "AWS/Billing, AWS/S3"
+    namespace = "AWS/Billing"
+  }
+
+  include_filter {
+    namespace = "AWS/S3"
   }
 }
