@@ -1,6 +1,6 @@
 // main IAM role used by the firehose stream
 resource "aws_iam_role" "firehose" {
-  name = format("firehose-role-%s", var.metric_stream_name)
+  name = format("Firehose-%s", var.metric_stream_name)
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -16,7 +16,7 @@ resource "aws_iam_role" "firehose" {
 
 # allow firehose to emit error logs
 resource "aws_iam_role_policy" "firehose" {
-  name = format("firehose-%s", var.metric_stream_name)
+  name = format("Firehose-%s", var.metric_stream_name)
   role = aws_iam_role.firehose.id
 
   policy = jsonencode({
@@ -27,7 +27,7 @@ resource "aws_iam_role_policy" "firehose" {
         Resource = ["*"]
         Action = ["logs:PutLogEvents"]
       }
-      ,
+    ,
       {
         Effect = "Allow"
         Action = [
@@ -69,7 +69,7 @@ data "aws_iam_policy_document" "metric_stream_assume_role" {
 }
 
 resource "aws_iam_role_policy" "metric_stream_role" {
-  name = "cloudwatch-metric-stream-policy"
+  name = "AWSCloudWatchMetricStreamPolicy"
   role = aws_iam_role.metric_stream_role.id
 
   policy = jsonencode({
@@ -98,11 +98,11 @@ resource "aws_kinesis_firehose_delivery_stream" "stream" {
     buffering_size    = 1
     buffering_interval = 60
     role_arn          = aws_iam_role.firehose.arn
-    
+
     request_configuration {
       content_encoding = "GZIP"
     }
-    
+
     # S3 backup configuration is required for HTTP endpoints; use the provided existing bucket ARN
     s3_configuration {
       role_arn          = aws_iam_role.firehose.arn
@@ -121,6 +121,6 @@ resource "aws_cloudwatch_metric_stream" "metric_stream" {
   output_format = "opentelemetry1.0"
 
   include_filter {
-    namespace = "AWS/Billing, AWS/S3"
+    namespace = "AWS/Billing"
   }
 }
