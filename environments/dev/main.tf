@@ -3,12 +3,12 @@ module "monitoring" {
 }
 
 module "iam" {
-  source = "../../modules/iam"
+  source     = "../../modules/iam"
   github_org = var.github_org
 }
 
 module "network" {
-  source = "../../modules/network"
+  source                            = "../../modules/network"
   private_subnet_flow_log_allow_arn = module.monitoring.private_subnet_flow_log_allow_arn
   private_subnet_flow_log_deny_arn  = module.monitoring.private_subnet_flow_log_deny_arn
   public_subnet_flow_log_allow_arn  = module.monitoring.public_subnet_flow_log_allow_arn
@@ -39,7 +39,7 @@ module "api_gateway" {
 }
 
 module "dns" {
-  source = "../../modules/dns"
+  source                  = "../../modules/dns"
   api_gateway_domain_name = module.api_gateway.api_gateway_domain_name
   api_gateway_zone_id     = module.api_gateway.api_gateway_zone_id
 }
@@ -54,4 +54,12 @@ module "grafana_logs" {
   grafana_log_url      = var.grafana_log_url
   grafana_log_username = var.grafana_log_username
   grafana_log_key      = var.grafana_log_key
+}
+
+module "grafana_metrics" {
+  source                      = "../../modules/grafana/metrics"
+  grafana_metrics_endpoint    = var.grafana_metrics_endpoint
+  grafana_metrics_instance_id = var.grafana_metrics_instance_id
+  grafana_metrics_write_token = var.grafana_metrics_write_token
+  existing_fallback_s3_arn    = var.existing_fallback_s3_arn
 }
