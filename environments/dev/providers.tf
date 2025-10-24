@@ -9,7 +9,7 @@ terraform {
 
   backend "s3" {
     bucket  = "terraform-state-897729105223-eu-west-1"
-    key     = "dev/terraform.tfstate"
+    key     = "dev/us-east-1/terraform.tfstate"
     region  = "eu-west-1"
     profile = "admin-profile"
     encrypt = true
@@ -17,6 +17,6 @@ terraform {
 }
 
 provider "aws" {
-  region = "eu-west-1"
+  region = "us-east-1"
   profile = "admin-profile"
 }

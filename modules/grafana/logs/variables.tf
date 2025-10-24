@@ -17,22 +17,10 @@ variable "grafana_log_key" {
   default     = ""
 }
 
-variable "s3_bucket" {
-  type        = string
-  description = "The name of the bucket where to upload the 'lambda-promtail.zip' file."
-  default     = "grafanalabs-897729105223-eu-west-1"
-}
-
-variable "s3_key" {
-  type        = string
-  description = "The desired path where to upload the 'lambda-promtail.zip' file (defaults to the root folder)."
-  default     = "lambda-promtail.zip"
-}
-
 variable "log_group_names" {
   type        = list(string)
   description = "List of CloudWatch Log Group names to create Subscription Filters for (ex. /aws/lambda/my-log-group)."
-  default     = ["/aws/lambda/spring-lambda-hello", "/aws/lambda/spring-boot-gen-ai"]
+  default     = ["cloudfront-log"]
 }
 
 variable "keep_stream" {
@@ -51,4 +39,28 @@ variable "batch_size" {
   type        = string
   description = "Determines when to flush the batch of logs (bytes)."
   default     = ""
+}
+
+variable "function_name_suffix" {
+  type        = string
+  description = "Suffix to append to function and log group names (e.g., '-us' for US region)"
+  default     = "us-east-1"
+}
+
+variable "existing_role_arn" {
+  type        = string
+  description = "ARN of existing IAM role to use when reuse_existing_role is true"
+  default     = "arn:aws:iam::897729105223:role/GrafanaLabsCloudWatchLogsIntegration"
+}
+
+variable "s3_bucket" {
+type        = string
+description = "The name of the bucket where to upload the 'lambda-promtail.zip' file."
+default     = "grafanalabs-897729105223-us-east-1"
+}
+
+variable "s3_key" {
+type        = string
+description = "The desired path where to upload the 'lambda-promtail.zip' file (defaults to the root folder)."
+default     = "lambda-promtail.zip"
 }
