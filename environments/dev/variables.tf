@@ -17,3 +17,8 @@ variable "grafana_metrics_instance_id" {}
 variable "grafana_metrics_write_token" {}
 
 variable "existing_fallback_s3_arn" {}
+
+variable "existing_lambda_role_arn" {}
+variable "certificate_arn" {}
+variable "custom_domain_name_api" {}
+variable "custom_domain_name_ai" {}

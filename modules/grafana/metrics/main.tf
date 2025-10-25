@@ -95,8 +95,8 @@ resource "aws_kinesis_firehose_delivery_stream" "stream" {
     url               = var.grafana_metrics_endpoint
     name              = "Grafana AWS Metric Stream Destination"
     access_key        = format("%s:%s", var.grafana_metrics_instance_id, var.grafana_metrics_write_token)
-    buffering_size    = 1
-    buffering_interval = 60
+    buffering_size    = 5
+    buffering_interval = 900
     role_arn          = aws_iam_role.firehose.arn
 
     request_configuration {

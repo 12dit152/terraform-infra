@@ -25,23 +25,43 @@ module "storage" {
   source = "../../modules/storage"
 }
 
-module "lambda" {
-  source = "../../modules/lambda"
+module "lambda_hello" {
+  source = "../../modules/lambda/hello"
 }
 
-module "api_gateway" {
-  source               = "../../modules/api-gateway"
-  lambda_function_arn  = module.lambda.lambda_function_arn
-  lambda_function_name = module.lambda.lambda_function_name
-  lambda_alias_name    = module.lambda.lambda_alias_name
-  custom_domain_name   = "api.samardash.com"
-  certificate_arn      = "arn:aws:acm:eu-west-1:897729105223:certificate/5d09b88a-d04f-49cd-8b24-3e87ff5a4e4c"
+module "lambda_gen_ai" {
+  source                   = "../../modules/lambda/gen-ai"
+  existing_lambda_role_arn = var.existing_lambda_role_arn
 }
 
-module "dns" {
-  source                  = "../../modules/dns"
-  api_gateway_domain_name = module.api_gateway.api_gateway_domain_name
-  api_gateway_zone_id     = module.api_gateway.api_gateway_zone_id
+module "api_gateway_hello" {
+  source               = "../../modules/api-gateway/hello"
+  lambda_function_arn  = module.lambda_hello.lambda_function_arn
+  lambda_function_name = module.lambda_hello.lambda_function_name
+  lambda_alias_name    = module.lambda_hello.lambda_alias_name
+  custom_domain_name   = var.custom_domain_name_api
+  certificate_arn      = var.certificate_arn
+}
+
+module "api_gateway_gen_ai" {
+  source                      = "../../modules/api-gateway/gen-ai"
+  lambda_function_arn_gen_ai  = module.lambda_gen_ai.lambda_function_arn_gen_ai
+  lambda_function_name_gen_ai = module.lambda_gen_ai.lambda_function_name_gen_ai
+  lambda_alias_name_gen_ai    = module.lambda_gen_ai.lambda_alias_name_gen_ai
+  custom_domain_name_gen_ai   = var.custom_domain_name_ai
+  certificate_arn             = var.certificate_arn
+}
+
+module "dns_hello" {
+  source                  = "../../modules/dns/hello"
+  api_gateway_domain_name = module.api_gateway_hello.api_gateway_domain_name
+  api_gateway_zone_id     = module.api_gateway_hello.api_gateway_zone_id
+}
+
+module "dns_gen_ai" {
+  source                         = "../../modules/dns/gen-ai"
+  api_gateway_domain_name_gen_ai = module.api_gateway_gen_ai.api_gateway_domain_name_gen_ai
+  api_gateway_zone_id_gen_ai     = module.api_gateway_gen_ai.api_gateway_zone_id_gen_ai
 }
 
 module "billing" {

@@ -1,6 +1,3 @@
-data "aws_caller_identity" "current" {}
-data "aws_region" "current" {}
-
 # Lambda execution role
 resource "aws_iam_role" "lambda_role" {
   name = "spring-lambda-execution-role"

@@ -7,7 +7,7 @@ resource "aws_s3_object_copy" "lambda_promtail_zipfile" {
 }
 
 resource "aws_iam_role" "lambda_promtail_role" {
-  name = "GrafanaLabsCloudWatchLogsIntegration"
+  name = "grafana-cloudwatch-logs-lambda-promtail-role"
 
   assume_role_policy = jsonencode({
     "Version" : "2012-10-17",
@@ -42,12 +42,12 @@ resource "aws_iam_role_policy" "lambda_promtail_policy_logs" {
 }
 
 resource "aws_cloudwatch_log_group" "lambda_promtail_log_group" {
-  name              = "/aws/lambda/GrafanaCloudLambdaPromtail"
+  name              = "/aws/lambda/grafana-cloudwatch-logs-lambda-promtail"
   retention_in_days = 1
 }
 
 resource "aws_lambda_function" "lambda_promtail" {
-  function_name = "GrafanaCloudLambdaPromtail"
+  function_name = "grafana-cloudwatch-logs-lambda-promtail"
   role          = aws_iam_role.lambda_promtail_role.arn
 
   timeout     = 60

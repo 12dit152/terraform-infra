@@ -32,7 +32,7 @@ variable "s3_key" {
 variable "log_group_names" {
   type        = list(string)
   description = "List of CloudWatch Log Group names to create Subscription Filters for (ex. /aws/lambda/my-log-group)."
-  default     = ["/aws/lambda/spring-lambda-hello", "/aws/lambda/spring-boot-gen-ai"]
+  default     = ["/aws/lambda/spring-lambda-hello", "/aws/lambda/spring-lambda-gen-ai"]
 }
 
 variable "keep_stream" {
