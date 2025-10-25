@@ -23,9 +23,9 @@ resource "aws_iam_role_policy" "firehose" {
     Version = "2012-10-17"
     Statement = [
       {
-        Effect = "Allow"
+        Effect   = "Allow"
         Resource = ["*"]
-        Action = ["logs:PutLogEvents"]
+        Action   = ["logs:PutLogEvents"]
       }
       ,
       {
@@ -60,7 +60,7 @@ data "aws_iam_policy_document" "metric_stream_assume_role" {
     effect = "Allow"
 
     principals {
-      type    = "Service"
+      type        = "Service"
       identifiers = ["streams.metrics.cloudwatch.amazonaws.com"]
     }
 
@@ -92,22 +92,22 @@ resource "aws_kinesis_firehose_delivery_stream" "stream" {
   destination = "http_endpoint"
 
   http_endpoint_configuration {
-    url               = var.grafana_metrics_endpoint
-    name              = "Grafana AWS Metric Stream Destination"
-    access_key        = format("%s:%s", var.grafana_metrics_instance_id, var.grafana_metrics_write_token)
-    buffering_size    = 1
-    buffering_interval = 60
-    role_arn          = aws_iam_role.firehose.arn
-    
+    url                = var.grafana_metrics_endpoint
+    name               = "Grafana AWS Metric Stream Destination"
+    access_key         = format("%s:%s", var.grafana_metrics_instance_id, var.grafana_metrics_write_token)
+    buffering_size     = 5
+    buffering_interval = 900
+    role_arn           = aws_iam_role.firehose.arn
+
     request_configuration {
       content_encoding = "GZIP"
     }
-    
+
     # S3 backup configuration is required for HTTP endpoints; use the provided existing bucket ARN
     s3_configuration {
-      role_arn          = aws_iam_role.firehose.arn
-      bucket_arn        = var.existing_fallback_s3_arn
-      buffering_size    = 5
+      role_arn           = aws_iam_role.firehose.arn
+      bucket_arn         = var.existing_fallback_s3_arn
+      buffering_size     = 5
       buffering_interval = 300
       compression_format = "GZIP"
     }
@@ -126,5 +126,9 @@ resource "aws_cloudwatch_metric_stream" "metric_stream" {
 
   include_filter {
     namespace = "AWS/S3"
+  }
+
+  include_filter {
+    namespace = "AWS/Lambda"
   }
 }
