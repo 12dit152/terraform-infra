@@ -14,12 +14,12 @@ depends_on = [ aws_s3_bucket.grafana_lambda_code ]
 }
 
 resource "aws_cloudwatch_log_group" "lambda_promtail_log_group" {
-name              = "/aws/lambda/GrafanaCloudLambdaPromtail-${var.function_name_suffix}"
+name              = "/aws/lambda/grafana-cloudwatch-logs-lambda-promtail-${var.function_name_suffix}"
 retention_in_days = 1
 }
 
 resource "aws_lambda_function" "lambda_promtail" {
-function_name = "GrafanaCloudLambdaPromtail-${var.function_name_suffix}"
+function_name = "grafana-cloudwatch-logs-lambda-promtail-${var.function_name_suffix}"
 role          = var.existing_role_arn
 
 timeout     = 60

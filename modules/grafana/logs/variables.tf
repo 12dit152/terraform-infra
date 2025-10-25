@@ -50,7 +50,7 @@ variable "function_name_suffix" {
 variable "existing_role_arn" {
   type        = string
   description = "ARN of existing IAM role to use when reuse_existing_role is true"
-  default     = "arn:aws:iam::897729105223:role/GrafanaLabsCloudWatchLogsIntegration"
+  default     = "arn:aws:iam::897729105223:role/grafana-cloudwatch-logs-lambda-promtail-role"
 }
 
 variable "s3_bucket" {
